@@ -13,6 +13,27 @@ public class TitleUICtrl : MonoBehaviour {
 		m_Animator = GetComponent<Animator>();
 	}
 	
+	///--------------------------------
+	// 解放
+	///--------------------------------
+	private void ReleaseAllObjectsAndCtrls()
+	{	
+		System.GC.Collect ();
+		
+		Resources.UnloadUnusedAssets ();
+	}
+	
+	///--------------------------------
+	// 破棄
+	///--------------------------------
+	void OnDestroy()
+	{
+		ReleaseAllObjectsAndCtrls ();
+	}
+	
+	///--------------------------------
+	// 更新
+	///--------------------------------
 	void Update()
 	{
 		if( m_OpenRq )
@@ -48,7 +69,7 @@ public class TitleUICtrl : MonoBehaviour {
 	{
 		AnimatorStateInfo stateInfo = m_Animator.GetCurrentAnimatorStateInfo(0);
 		
-		if( stateInfo.nameHash ==  Animator.StringToHash("Base Layer.OpenLoop") )
+		if( stateInfo.nameHash ==  Animator.StringToHash( "Base Layer.OpenLoop" ) )
 		{
 			return true;
 		}
@@ -59,7 +80,7 @@ public class TitleUICtrl : MonoBehaviour {
 	{
 		AnimatorStateInfo stateInfo = m_Animator.GetCurrentAnimatorStateInfo(0);
 		
-		if( stateInfo.nameHash ==  Animator.StringToHash("Base Layer.CloseLoop") )
+		if( stateInfo.nameHash ==  Animator.StringToHash( "Base Layer.CloseLoop" ) )
 		{
 			return true;
 		}
@@ -68,11 +89,21 @@ public class TitleUICtrl : MonoBehaviour {
 	
 	private void Open()
 	{
+		if ( m_Animator.IsInTransition (0) )
+		{
+			return;
+		}
+
 		m_Animator.SetTrigger( "Open" );
 	}
 	
 	private void Close()
 	{
+		if ( m_Animator.IsInTransition (0) )
+		{
+			return;
+		}
+
 		m_Animator.SetTrigger( "Close" );
 	}
 }
