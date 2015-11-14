@@ -28,7 +28,7 @@ public class PlayerCtrl : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update () {
+	public void MovePlayer () {
 
 		if ( m_CharacterController.isGrounded )
 		{

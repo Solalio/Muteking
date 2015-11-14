@@ -109,13 +109,14 @@ public class SQ_GameMainCtrl : MonoBehaviour {
 				m_StageCtrl = add_GameObject.GetComponent<StageCtrl>();
 				m_StageCtrl.Init();
 
-				add_GameObject = Instantiate( Resources.Load ( "GameMain/PlayerCameraPrefab" ) as GameObject );
-				m_PlayerCameraCtrl = add_GameObject.GetComponent<PlayerCameraCtrl>();
-			
 				add_GameObject = Instantiate( Resources.Load ( "GameMain/PlayerPrefab" ) as GameObject );
 				m_PlayerCtrl = add_GameObject.GetComponent<PlayerCtrl>();
 				m_PlayerCtrl.Init();
 			
+				add_GameObject = Instantiate( Resources.Load ( "GameMain/PlayerCameraPrefab" ) as GameObject );
+				m_PlayerCameraCtrl = add_GameObject.GetComponent<PlayerCameraCtrl>();
+				m_PlayerCameraCtrl.Init();
+
 				ModeChange( MODE.LOAD_LOOP );
 
 				break;
@@ -126,13 +127,34 @@ public class SQ_GameMainCtrl : MonoBehaviour {
 
 				break;
 
+			case MODE.SCENE_OPEN_INIT:
+			
+				m_PlayerCameraCtrl.SetTargetTransform( m_PlayerCtrl.gameObject.transform );
+				m_PlayerCameraCtrl.SetChaseRimitPosition( m_StageCtrl.GetStartPosition(), m_StageCtrl.GetEndPosition() );
+				
+				ModeChange( MODE.SCENE_OPEN_LOOP );
+
+				break;
+
 			case MODE.SCENE_OPEN_LOOP:
 
 				ModeChange( MODE.INPUT_WAIT_INIT );
 
 				break;
 
+			case MODE.INPUT_WAIT_INIT:
+
+				m_ClickLock = false;
+
+				ModeChange( MODE.INPUT_WAIT_LOOP );
+
+				break;
+
 			case MODE.INPUT_WAIT_LOOP:
+			
+				m_PlayerCameraCtrl.ChaseTarget();
+
+				m_PlayerCtrl.MovePlayer();
 
 				break;
 
