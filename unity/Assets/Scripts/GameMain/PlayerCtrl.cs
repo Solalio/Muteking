@@ -8,9 +8,12 @@ using System.Collections;
 ///--------------------------------
 public class PlayerCtrl : MonoBehaviour {
 
-	private static float GRAVITY = 0.981f;
-	private static float MOVE_SPEED = 5.0f;
-	private static float JUMP_SPEED = 5.0f;
+	[SerializeField]
+	private float GRAVITY = 0.981f;
+	[SerializeField]
+	private float MOVE_SPEED = 5.0f;
+	[SerializeField]
+	private float JUMP_SPEED = 5.0f;
 
 	private CharacterController m_CharacterController;
 
