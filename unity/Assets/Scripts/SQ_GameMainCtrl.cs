@@ -114,6 +114,7 @@ public class SQ_GameMainCtrl : MonoBehaviour {
 			
 				add_GameObject = Instantiate( Resources.Load ( "GameMain/PlayerPrefab" ) as GameObject );
 				m_PlayerCtrl = add_GameObject.GetComponent<PlayerCtrl>();
+				m_PlayerCtrl.Init();
 			
 				ModeChange( MODE.LOAD_LOOP );
 
